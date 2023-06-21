@@ -7,13 +7,14 @@
 <svelte:head>
 	<title>News Reader</title>
 </svelte:head>
-<div>
+<div class="container">
 	<dl class="list-dl">
 		{#each data.news as newsItem}
+			<hr />
 			<div>
-				<a href="{newsItem.link}" rel="prefetch">
+				<a href="{newsItem.link}">
 				<span class="flex-auto">
-					<dt class="font-extrabold">{newsItem.title}</dt>
+					<dt class="font-extrabold" style="white-space: normal">{newsItem.title}</dt>
 					<dd>{newsItem.feed} -
 						{#if newsItem.feed !== 'hn'}
 							{newsItem.creator}
