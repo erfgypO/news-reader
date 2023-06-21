@@ -7,7 +7,7 @@
 <svelte:head>
 	<title>News Reader</title>
 </svelte:head>
-<div class="container">
+<div class="container mx-auto">
 	<dl class="list-dl">
 		{#each data.news as newsItem}
 			<hr />
