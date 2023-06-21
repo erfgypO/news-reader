@@ -21,8 +21,6 @@ function parseItems(feedName, items) {
         }
         case 'engadget': {
             return items.map(i => {
-                console.log(i.media.$);
-                //console.log(i['[object Object]']['$'].url);
                 return {
                     title: i.title,
                     creator: i.creator,
