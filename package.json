@@ -31,7 +31,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"rss-parser": "^3.13.0",
-		"svelte-device-info": "^1.0.0"
+		"rss-parser": "^3.13.0"
 	}
 }
