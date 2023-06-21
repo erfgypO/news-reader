@@ -60,6 +60,6 @@ export async function load() {
     items.sort((a, b) => b.timestamp - a.timestamp);
 
     return {
-        news: items
+        news: items,
     };
 }

@@ -1,13 +1,48 @@
 <script>
+	import { Accordion, AccordionItem, SlideToggle } from '@skeletonlabs/skeleton';
 	//** @type {import('-/$types').PageData} */
 	export let data;
+
+	let hnEnabled = true;
+	let tcEnabled = true;
+	let engadgetEnabled = true;
+
+	$: news = data.news.filter((newsItem) => {
+		if (newsItem.feed === 'hn') {
+			return hnEnabled;
+		} else if (newsItem.feed === 'tc') {
+			return tcEnabled;
+		} else if (newsItem.feed === 'engadget') {
+			return engadgetEnabled;
+		}
+		return true;
+	});
 </script>
 
 <svelte:head>
 	<title>News Reader</title>
 </svelte:head>
 <div class="container mx-auto">
-	{#each data.news as newsItem}
+	<Accordion class="mt-2">
+		<AccordionItem>
+			<svelte:fragment slot="summary">Filter</svelte:fragment>
+			<svelte:fragment slot="content">
+				<div class="grid grid-cols-1 sm:grid-cols-3">
+					<div class="place-items-center sm:flex">
+						<SlideToggle class="mx-auto" active="bg-primary-500" bind:checked={hnEnabled}>Hacker News</SlideToggle>
+					</div>
+					<div class="place-items-center sm:flex">
+						<SlideToggle class="mx-auto" active="bg-primary-500" bind:checked={tcEnabled}>Tech Crunch</SlideToggle>
+					</div>
+					<div class="place-items-center sm:flex">
+						<SlideToggle class="mx-auto" active="bg-primary-500" bind:checked={engadgetEnabled}>Engadget</SlideToggle>
+					</div>
+				</div>
+			</svelte:fragment>
+		</AccordionItem>
+	</Accordion>
+	<hr />
+	{#each news as newsItem}
 		<a href="{newsItem.link}">
 		<div class="card card-hover variant-soft-surface m-2">
 			<header>
