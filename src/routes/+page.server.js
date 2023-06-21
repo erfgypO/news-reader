@@ -41,15 +41,10 @@ function parseItems(feedName, items) {
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-    const items = [];
-
     const parser = new Parser();
 
-    const hnFeed = await parser.parseURL('https://news.ycombinator.com/rss');
-    items.push(...parseItems('hn', hnFeed.items));
-
-    const tcFeed = await parser.parseURL('https://techcrunch.com/feed');
-    items.push(...parseItems('tc', tcFeed.items));
+    const loadHnFeed = parser.parseURL('https://news.ycombinator.com/rss').then(feed => parseItems('hn', feed.items));
+    const loadTcFeed = parser.parseURL('https://techcrunch.com/feed').then(feed => parseItems('tc', feed.items));
 
     const engadgetParser = new Parser({
         customFields: {
@@ -58,8 +53,10 @@ export async function load() {
             ]
         }
     });
-    const engadgetFeed = await engadgetParser.parseURL('https://www.engadget.com/rss.xml');
-    items.push(...parseItems('engadget', engadgetFeed.items));
+    const loadEngadgetFeed = engadgetParser.parseURL('https://www.engadget.com/rss.xml').then(feed => parseItems('engadget', feed.items));
+
+    const items = (await Promise.all([loadHnFeed, loadTcFeed, loadEngadgetFeed])).flat();
+
     items.sort((a, b) => b.timestamp - a.timestamp);
 
     return {
