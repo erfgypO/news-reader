@@ -4,9 +4,6 @@ function parseItems(feedName, items) {
     switch (feedName) {
         case 'hn':
         case 'tc': {
-            if(feedName === 'hn') {
-                console.log(items[0]);
-            }
             return items.map(i => {
                     return {
                         title: i.title,
