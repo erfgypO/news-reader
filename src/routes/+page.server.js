@@ -4,6 +4,9 @@ function parseItems(feedName, items) {
     switch (feedName) {
         case 'hn':
         case 'tc': {
+            if(feedName === 'hn') {
+                console.log(items[0]);
+            }
             return items.map(i => {
                     return {
                         title: i.title,
@@ -11,7 +14,7 @@ function parseItems(feedName, items) {
                         link: i.link,
                         date: new Date(i.isoDate),
                         timestamp: new Date(i.isoDate).getTime(),
-                        guid: i.guid,
+                        guid: feedName !== 'hn' ? i.guid : i.comments.split('id=')[1],
                         snippet: feedName !== 'hn' ? i.contentSnippet.split('[...]')[0] : '',
                         content: i['content:encoded'] ?? '',
                         feed: feedName
